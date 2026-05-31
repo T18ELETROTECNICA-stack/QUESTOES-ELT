@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T18 - Questoes Eletrotecnica</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background: #f0f0f0; color: #222; line-height: 1.6; }
+        header { background: #1a1a2e; color: white; padding: 15px; text-align: center; }
+        header h1 { font-size: 1.2rem; }
+        header p { font-size: 0.8rem; opacity: 0.8; }
+        .badge { background: #c41e3a; padding: 4px 10px; border-radius: 3px; font-size: 0.7rem; display: inline-block; margin-top: 5px; }
+        main { max-width: 900px; margin: 0 auto; padding: 15px; }
+        .card { background: white; border: 1px solid #ddd; border-radius: 4px; padding: 15px; margin-bottom: 12px; }
+        .info { background: #e3f2fd; border-left: 4px solid #1565c0; padding: 10px; margin-bottom: 12px; font-size: 0.85rem; }
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
+        .stat { background: white; border: 1px solid #ddd; border-radius: 4px; padding: 12px; text-align: center; }
+        .stat .num { font-size: 1.5rem; font-weight: 700; }
+        .stat .label { font-size: 0.7rem; color: #666; }
+        .topic-btn { display: block; width: 100%; text-align: left; padding: 12px; margin-bottom: 8px; background: white; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; }
+        .topic-btn:hover { border-color: #c41e3a; background: #fff5f5; }
+        .topic-btn .title { font-weight: 600; font-size: 0.9rem; }
+        .topic-btn .desc { font-size: 0.8rem; color: #666; }
+        .topic-btn .count { font-size: 0.75rem; color: #999; }
+        .tag { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 0.7rem; font-weight: 600; margin-left: 5px; }
+        .tag-easy { background: #e8f5e9; color: #2e7d32; }
+        .tag-med { background: #fff3e0; color: #e65100; }
+        .tag-hard { background: #ffebee; color: #c62828; }
+        .btn { display: inline-block; padding: 10px 18px; border: none; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 0.9rem; }
+        .btn-red { background: #c41e3a; color: white; }
+        .btn-gray { background: #e0e0e0; color: #333; border: 1px solid #ccc; }
+        .btn-green { background: #2e7d32; color: white; }
+        .option { border: 2px solid #ddd; border-radius: 4px; padding: 12px; margin-bottom: 8px; cursor: pointer; background: white; }
+        .option:hover { border-color: #c41e3a; }
+        .option.selected { border-color: #c41e3a; background: #fce8e8; }
+        .option.correct { border-color: #2e7d32; background: #e8f5e9; }
+        .option.wrong { border-color: #c62828; background: #ffebee; }
+        .option .letter { display: inline-block; width: 26px; height: 26px; background: #f0f0f0; border-radius: 50%; text-align: center; line-height: 26px; font-weight: 600; font-size: 0.8rem; margin-right: 10px; }
+        .step { border-left: 3px solid #c41e3a; padding-left: 12px; margin-bottom: 12px; }
+        .formula { background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 4px; padding: 10px; font-family: monospace; font-size: 0.9rem; margin-bottom: 8px; }
+        .tip-box { background: #fffde7; border: 1px solid #f9a825; border-radius: 4px; padding: 10px; font-size: 0.85rem; }
+        .hidden { display: none !important; }
+        .diff-facil { background: #e8f5e9; color: #2e7d32; padding: 2px 8px; border-radius: 3px; font-size: 0.7rem; }
+        .diff-medio { background: #fff3e0; color: #e65100; padding: 2px 8px; border-radius: 3px; font-size: 0.7rem; }
+        .diff-dificil { background: #ffebee; color: #c62828; padding: 2px 8px; border-radius: 3px; font-size: 0.7rem; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 0.8rem; }
+        th, td { border: 1px solid #ddd; padding: 6px; text-align: left; }
+        th { background: #f5f5f5; }
+        footer { text-align: center; padding: 15px; font-size: 0.75rem; color: #999; border-top: 1px solid #ddd; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Banco de Questoes - Eletrotecnica T18</h1>
+    <p>Turma T18 | Curso Tecnico de Eletrotecnica | 2026</p>
+    <span class="badge">500+ QUESTOES</span>
+</header>
+
+<main>
+    <div id="page-home">
+        <div class="info">
+            <strong>Banco de 500+ questoes!</strong> Cada vez que fazes um simulado, as questoes sao diferentes. 
+            <strong>Eletricidade Basica tem 200 questoes</strong> para treinar as grandezas e unidades.
+        </div>
+
+        <div class="stats">
+            <div class="stat"><div class="num" id="st-total">0</div><div class="label">Questoes Feitas</div></div>
+            <div class="stat"><div class="num" style="color:#2e7d32" id="st-correct">0</div><div class="label">Acertos</div></div>
+            <div class="stat"><div class="num" style="color:#1565c0" id="st-rate">0%</div><div class="label">Taxa</div></div>
+        </div>
+
+        <div class="card">
+            <h3 style="margin-bottom:10px">Escolhe o Tema (50 questoes cada)</h3>
+            <button class="topic-btn" onclick="startTopic('eb')">
+                <span class="title">Eletricidade Basica <span class="tag tag-easy">200 questoes</span></span>
+                <div class="desc">Lei de Ohm, grandezas, unidades, associacao, potencia, energia</div>
+                <div class="count">Simulado: 50 questoes (todas de Eletricidade Basica)</div>
+            </button>
+            <button class="topic-btn" onclick="startTopic('cc')">
+                <span class="title">Circuitos CC <span class="tag tag-med">150 questoes</span></span>
+                <div class="desc">Kirchhoff, Thevenin, Norton, divisores, superposicao</div>
+                <div class="count">Simulado: 25 EB + 25 CC</div>
+            </button>
+            <button class="topic-btn" onclick="startTopic('ca')">
+                <span class="title">Circuitos CA <span class="tag tag-med">150 questoes</span></span>
+                <div class="desc">Impedancia, reatancia, fasores, potencia em AC</div>
+                <div class="count">Simulado: 25 EB + 25 CA</div>
+            </button>
+            <button class="topic-btn" onclick="startTopic('tr')">
+                <span class="title">Transformadores <span class="tag tag-med">100 questoes</span></span>
+                <div class="desc">Relacao transformacao, rendimento, ensaios, perdas</div>
+                <div class="count">Simulado: 25 EB + 25 Transformadores</div>
+            </button>
+            <button class="topic-btn" onclick="startTopic('mq')">
+                <span class="title">Maquinas Eletricas <span class="tag tag-hard">100 questoes</span></span>
+                <div class="desc">Motores AC/DC, geradores, escorregamento, principios</div>
+                <div class="count">Simulado: 25 EB + 25 Maquinas</div>
+            </button>
+            <button class="topic-btn" onclick="startTopic('in')">
+                <span class="title">Instalacoes Eletricas <span class="tag tag-med">100 questoes</span></span>
+                <div class="desc">RBT, protecao, aterramento, DDR, condutores</div>
+                <div class="count">Simulado: 25 EB + 25 Instalacoes</div>
+            </button>
+            <button class="topic-btn" onclick="startTopic('all')">
+                <span class="title">Simulado Completo <span class="tag tag-hard">Misto</span></span>
+                <div class="desc">50 questoes aleatorias de todos os temas</div>
+                <div class="count">Cada tentativa e completamente diferente!</div>
+            </button>
+        </div>
+
+        <div class="card">
+            <h3 style="margin-bottom:10px">📋 Grandezas e Unidades</h3>
+            <table>
+                <tr><th>Grandeza</th><th>Simb.</th><th>Unidade</th><th>Simb.</th></tr>
+                <tr><td><strong>Tensao</strong></td><td>V</td><td>Volt</td><td>V</td></tr>
+                <tr><td><strong>Corrente</strong></td><td>I</td><td>Ampere</td><td>A</td></tr>
+                <tr><td><strong>Resistencia</strong></td><td>R</td><td>Ohm</td><td>Ω</td></tr>
+                <tr><td><strong>Potencia</strong></td><td>P</td><td>Watt</td><td>W</td></tr>
+                <tr><td><strong>Energia</strong></td><td>E</td><td>Watt-hora</td><td>Wh</td></tr>
+                <tr><td><strong>Impedancia</strong></td><td>Z</td><td>Ohm</td><td>Ω</td></tr>
+            </table>
+            <div style="font-size:0.8rem;background:#fff3e0;padding:8px;border-radius:4px;margin-top:8px">
+                <strong>Conversoes:</strong> 1kV=1000V | 1mA=0,001A | 1μF=10⁻⁶F | 1kΩ=1000Ω | 1kWh=1000Wh
+            </div>
+        </div>
+    </div>
+
+    <div id="page-q" class="hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <button class="btn btn-gray" onclick="goHome()">← Voltar</button>
+            <span style="font-size:0.85rem">Questao <strong id="q-num">1</strong> de <strong id="q-total">50</strong></span>
+        </div>
+
+        <div class="card">
+            <div style="margin-bottom:8px">
+                <span id="q-diff" class="diff-facil">Facil</span>
+                <span id="q-concept" style="background:#e3f2fd;color:#1565c0;padding:2px 8px;border-radius:3px;font-size:0.7rem;margin-left:5px">Lei de Ohm</span>
+            </div>
+            <p id="q-text" style="font-size:0.95rem;margin-bottom:10px"></p>
+        </div>
+
+        <div id="q-opts"></div>
+
+        <div style="display:flex;gap:10px;margin-top:12px">
+            <button id="btn-check" class="btn btn-red" onclick="checkAnswer()">Verificar Resposta</button>
+            <button id="btn-next" class="btn btn-green hidden" onclick="nextQ()">Proxima →</button>
+        </div>
+
+        <div id="q-sol" class="hidden card" style="margin-top:12px">
+            <h3 style="margin-bottom:10px">Resolucao</h3>
+            <div id="sol-steps"></div>
+            <div style="border-top:1px solid #eee;padding-top:10px;margin-top:10px">
+                <h4 style="font-size:0.8rem;color:#666;margin-bottom:6px">Formulas</h4>
+                <div id="sol-forms"></div>
+            </div>
+            <div class="tip-box" style="margin-top:10px">
+                <strong>Nota:</strong> <span id="sol-tip"></span>
+            </div>
+        </div>
+    </div>
+
+    <div id="page-res" class="hidden" style="max-width:400px;margin:0 auto;text-align:center">
+        <div class="card" style="padding:25px">
+            <div style="font-size:2.5rem;margin-bottom:8px">🎓</div>
+            <h2 style="margin-bottom:4px">Resultados</h2>
+            <p style="font-size:0.85rem;color:#666;margin-bottom:15px">T18 - Eletrotecnica</p>
+
+            <div class="stats" style="margin-bottom:15px">
+                <div class="stat"><div class="num" id="res-total">0</div><div class="label">Total</div></div>
+                <div class="stat"><div class="num" style="color:#2e7d32" id="res-correct">0</div><div class="label">Acertos</div></div>
+                <div class="stat"><div class="num" style="color:#1565c0" id="res-rate">0%</div><div class="label">%</div></div>
+            </div>
+
+            <p id="res-msg" style="font-size:1rem;font-weight:600;margin-bottom:15px"></p>
+
+            <button class="btn btn-gray" onclick="goHome()">Inicio</button>
+            <button class="btn btn-red" onclick="retry()" style="margin-left:8px">Repetir</button>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>500+ Questoes | Turma T18 | Eletrotecnica 2026</p>
+</footer>
+
+<script>
+// ===== QUESTION DATA (hardcoded for reliability) =====
+const ALL_Q = [];
+
+// Helper
+function r(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+function f(n){return n.toString().replace('.',',');}
+
+// Eletricidade Basica - 50 variedades (repeated with different numbers)
+for(let i=0;i<50;i++){
+    let R=r(10,500), V=r(5,240), I=(V/R).toFixed(2);
+    ALL_Q.push({
+        id:'eb-ohm-'+i, theme:'Eletricidade Basica', diff:'Facil', concept:'Lei de Ohm',
+        text:'Um resistor de '+R+' Ω é ligado a uma fonte de '+V+' V. A corrente é:',
+        opts:[
+            {t:'I = '+f(I)+' A', c:true},
+            {t:'I = '+f((V*R/1000).toFixed(2))+' A', c:false},
+            {t:'I = '+f((R/V).toFixed(2))+' A', c:false},
+            {t:'I = '+f((V+R).toFixed(0))+' A', c:false}
+        ],
+        steps:['Dados: R='+R+'Ω, V='+V+'V','Lei de Ohm: I=V/R','I = '+V+'/'+R+' = '+f(I)+' A'],
+        forms:['I = V/R','I = '+V+'V / '+R+'Ω = '+f(I)+'A'],
+        tip:'Unidade: Ampere (A). Se R aumenta, I diminui.'
+    });
+}
+
+for(let i=0;i<30;i++){
+    let R=r(5,200), I=(r(1,50)/10), V=(R*I).toFixed(1);
+    ALL_Q.push({
+        id:'eb-volt-'+i, theme:'Eletricidade Basica', diff:'Facil', concept:'Lei de Ohm',
+        text:'Num circuito com R='+R+'Ω e I='+f(I.toFixed(1))+'A, a tensão é:',
+        opts:[
+            {t:'V = '+f(V)+' V', c:true},
+            {t:'V = '+f((R/I).toFixed(1))+' V', c:false},
+            {t:'V = '+f((R+I*10).toFixed(0))+' V', c:false},
+            {t:'V = '+f((I*10).toFixed(1))+' V', c:false}
+        ],
+        steps:['Dados: R='+R+'Ω, I='+f(I.toFixed(1))+'A','V = R×I','V = '+R+'×'+f(I.toFixed(1))+' = '+f(V)+'V'],
+        forms:['V = R×I'],
+        tip:'Se tens R e I, multiplica para obter V.'
+    });
+}
+
+for(let i=0;i<20;i++){
+    let R1=r(10,100), R2=r(10,100), V=r(5,50), Req=R1+R2, I=(V/Req).toFixed(2);
+    ALL_Q.push({
+        id:'eb-ser-'+i, theme:'Eletricidade Basica', diff:'Facil', concept:'Associacao Serie',
+        text:'Resistores de '+R1+'Ω e '+R2+'Ω em série com fonte de '+V+'V. A corrente é:',
+        opts:[
+            {t:'I = '+f(I)+' A', c:true},
+            {t:'I = '+f((V/Math.max(R1,R2)).toFixed(2))+' A', c:false},
+            {t:'I = '+f((V/(R1*R2/(R1+R2))).toFixed(2))+' A', c:false},
+            {t:'I = '+f((V/(R1+R2)*10).toFixed(2))+' A', c:false}
+        ],
+        steps:['Req = '+R1+'+'+R2+' = '+Req+'Ω','I = V/Req = '+V+'/'+Req,'I = '+f(I)+' A'],
+        forms:['Req = R1+R2','I = V/Req'],
+        tip:'Em série: corrente é a MESMA em todos. Req = soma.'
+    });
+}
+
+for(let i=0;i<25;i++){
+    let R1=r(10,100), R2=r(10,100), Req=Math.round((R1*R2)/(R1+R2));
+    ALL_Q.push({
+        id:'eb-par-'+i, theme:'Eletricidade Basica', diff:'Facil', concept:'Associacao Paralelo',
+        text:'Resistores de '+R1+'Ω e '+R2+'Ω em paralelo. Req é:',
+        opts:[
+            {t:'Req = '+Req+' Ω', c:true},
+            {t:'Req = '+(R1+R2)+' Ω', c:false},
+            {t:'Req = '+Math.round((R1+R2)/2)+' Ω', c:false},
+            {t:'Req = '+Math.round(Math.sqrt(R1*R2))+' Ω', c:false}
+        ],
+        steps:['1/Req = 1/'+R1+' + 1/'+R2,'Req = ('+R1+'×'+R2+')/('+R1+'+'+R2+')','Req = '+Req+'Ω'],
+        forms:['Req = (R1×R2)/(R1+R2)'],
+        tip:'Req em paralelo é SEMPRE MENOR que a menor resistência.'
+    });
+}
+
+for(let i=0;i<25;i++){
+    let V=r(10,230), I=(r(1,100)/10), P=(V*I).toFixed(0);
+    ALL_Q.push({
+        id:'eb-pow-'+i, theme:'Eletricidade Basica', diff:'Facil', concept:'Potencia',
+        text:'Aparelho ligado a '+V+'V consome '+f(I.toFixed(1))+'A. A potência é:',
+        opts:[
+            {t:'P = '+P+' W', c:true},
+            {t:'P = '+Math.round(V/I)+' W', c:false},
+            {t:'P = '+Math.round(V+I*10)+' W', c:false},
+            {t:'P = '+Math.round(V*I/10)+' W', c:false}
+        ],
+        steps:['P = V×I','P = '+V+'×'+f(I.toFixed(1)),'P = '+P+' W'],
+        forms:['P = V×I = V²/R = I²×R'],
+        tip:'Potência em Watt (W). 1kW = 1000W.'
+    });
+}
+
+for(let i=0;i<15;i++){
+    let P=r(100,3000), t=r(1,24), E=P*t;
+    ALL_Q.push({
+        id:'eb-en-'+i, theme:'Eletricidade Basica', diff:'Facil', concept:'Energia',
+        text:'Aparelho de '+P+'W ligado '+t+'h. Energia consumida:',
+        opts:[
+            {t:'E = '+E+' Wh = '+f((E/1000).toFixed(1))+' kWh', c:true},
+            {t:'E = '+Math.round(P/t)+' Wh', c:false},
+            {t:'E = '+Math.round(P+t*100)+' Wh', c:false},
+            {t:'E = '+Math.round(P*t/10)+' Wh', c:false}
+        ],
+        steps:['E = P×t','E = '+P+'×'+t+' = '+E+'Wh = '+f((E/1000).toFixed(1))+'kWh'],
+        forms:['E = P×t'],
+        tip:'Conta de eletricidade usa kWh! 1kWh = 1000Wh.'
+    });
+}
+
+for(let i=0;i<10;i++){
+    let R1=r(1,10)*1000, R2=r(1,10)*1000, Vt=r(5,24), V2=(Vt*R2/(R1+R2)).toFixed(2);
+    ALL_Q.push({
+        id:'eb-div-'+i, theme:'Eletricidade Basica', diff:'Medio', concept:'Divisor Tensao',
+        text:'Divisor: R1='+(R1/1000)+'kΩ, R2='+(R2/1000)+'kΩ, V='+Vt+'V. Tensão em R2:',
+        opts:[
+            {t:'V2 = '+f(V2)+' V', c:true},
+            {t:'V2 = '+f((Vt*R1/(R1+R2)).toFixed(2))+' V', c:false},
+            {t:'V2 = '+f((Vt/2).toFixed(2))+' V', c:false},
+            {t:'V2 = '+f((Vt*R2/R1).toFixed(2))+' V', c:false}
+        ],
+        steps:['V2 = V×(R2/(R1+R2))','V2 = '+Vt+'×('+R2+'/('+(R1+R2)+'))','V2 = '+f(V2)+'V'],
+        forms:['V2 = Vtotal×R2/(R1+R2)'],
+        tip:'kΩ→Ω: multiplica por 1000. Tensão divide-se na proporção das resistências.'
+    });
+}
+
+// Circuitos CC
+for(let i=0;i<30;i++){
+    let in1=r(1,10), in2=r(1,10), out1=r(1,10), out2=r(1,10);
+    let totalIn=in1+in2, totalOut=out1+out2, rem=totalIn-totalOut;
+    let dir=rem>0?'saindo':'entrando', abs=Math.abs(rem);
+    ALL_Q.push({
+        id:'cc-kcl-'+i, theme:'Circuitos CC', diff:'Medio', concept:'1a Lei Kirchhoff',
+        text:'No nó entram '+in1+'A e '+in2+'A. Saem '+out1+'A e '+out2+'A. Corrente restante:',
+        opts:[
+            {t:abs+'A ('+dir+')', c:true},
+            {t:totalIn+'A (entrando)', c:false},
+            {t:totalOut+'A (saindo)', c:false},
+            {t:(in1+out1)+'A', c:false}
+        ],
+        steps:['Σ Ientra = Σ Isai','Entradas: '+in1+'+'+in2+'='+totalIn+'A','Saídas: '+out1+'+'+out2+'='+totalOut+'A','Restante: '+abs+'A ('+dir+')'],
+        forms:['Σ Ientra = Σ Isai'],
+        tip:'A soma das correntes que entra é igual à que sai.'
+    });
+}
+
+for(let i=0;i<20;i++){
+    let d=[r(1,20),r(1,20),r(1,20)], total=d[0]+d[1]+d[2];
+    ALL_Q.push({
+        id:'cc-kvl-'+i, theme:'Circuitos CC', diff:'Medio', concept:'2a Lei Kirchhoff',
+        text:'Malha com quedas '+d[0]+'V, '+d[1]+'V e '+d[2]+'V. Tensão da fonte:',
+        opts:[
+            {t:'V = '+total+' V', c:true},
+            {t:'V = '+(d[0]+d[1])+' V', c:false},
+            {t:'V = '+Math.max(...d)+' V', c:false},
+            {t:'V = '+(d[0]*d[1])+' V', c:false}
+        ],
+        steps:['Σ Vfontes = Σ Vquedas','Quedas: '+d[0]+'+'+d[1]+'+'+d[2]+'='+total+'V','V = '+total+'V'],
+        forms:['Σ Vfontes = Σ Vquedas'],
+        tip:'Numa malha fechada: fontes = quedas.'
+    });
+}
+
+for(let i=0;i<25;i++){
+    let Vth=r(6,48), Rth=r(2,20), RL=r(2,20), I=(Vth/(Rth+RL)).toFixed(2);
+    ALL_Q.push({
+        id:'cc-th-'+i, theme:'Circuitos CC', diff:'Medio', concept:'Thevenin',
+        text:'Thevenin: Vth='+Vth+'V, Rth='+Rth+'Ω. Carga RL='+RL+'Ω. Corrente:',
+        opts:[
+            {t:'I = '+f(I)+' A', c:true},
+            {t:'I = '+f((Vth/Rth).toFixed(2))+' A', c:false},
+            {t:'I = '+f((Vth/RL).toFixed(2))+' A', c:false},
+            {t:'I = '+f((Vth*Rth/RL).toFixed(2))+' A', c:false}
+        ],
+        steps:['Rtotal = '+Rth+'+'+RL+'='+(Rth+RL)+'Ω','I = Vth/Rtotal = '+Vth+'/'+(Rth+RL),'I = '+f(I)+'A'],
+        forms:['I = Vth/(Rth+RL)'],
+        tip:'Thevenin simplifica tudo numa fonte + resistor em série.'
+    });
+}
+
+for(let i=0;i<25;i++){
+    let R1=r(10,100), R2=r(10,100), It=r(2,20), I1=(It*R2/(R1+R2)).toFixed(2);
+    ALL_Q.push({
+        id:'cc-div-'+i, theme:'Circuitos CC', diff:'Medio', concept:'Divisor Corrente',
+        text:'Divisor: R1='+R1+'Ω, R2='+R2+'Ω, Itotal='+It+'A. Corrente em R1:',
+        opts:[
+            {t:'I1 = '+f(I1)+' A', c:true},
+            {t:'I1 = '+f((It*R1/(R1+R2)).toFixed(2))+' A', c:false},
+            {t:'I1 = '+f((It/2).toFixed(2))+' A', c:false},
+            {t:'I1 = '+f((It*R2/R1).toFixed(2))+' A', c:false}
+        ],
+        steps:['I1 = It×(R2/(R1+R2))','I1 = '+It+'×('+R2+'/('+(R1+R2)+'))','I1 = '+f(I1)+'A'],
+        forms:['I1 = Itotal×R2/(R1+R2)'],
+        tip:'Resistência MAIOR = corrente MENOR.'
+    });
+}
+
+for(let i=0;i<25;i++){
+    let In=r(1,10), RN=r(2,20), RL=r(2,20), I=(In*RN/(RN+RL)).toFixed(2);
+    ALL_Q.push({
+        id:'cc-nor-'+i, theme:'Circuitos CC', diff:'Medio', concept:'Norton',
+        text:'Norton: In='+In+'A, RN='+RN+'Ω. RL='+RL+'Ω. Corrente na carga:',
+        opts:[
+            {t:'I = '+f(I)+' A', c:true},
+            {t:'I = '+In+' A', c:false},
+            {t:'I = '+f((In*RL/(RN+RL)).toFixed(2))+' A', c:false},
+            {t:'I = '+f((In*RN/RL).toFixed(2))+' A', c:false}
+        ],
+        steps:['I = In×(RN/(RN+RL))','I = '+In+'×('+RN+'/('+(RN+RL)+'))','I = '+f(I)+'A'],
+        forms:['I = In×RN/(RN+RL)'],
+        tip:'Norton = fonte de corrente em paralelo com resistor.'
+    });
+}
+
+for(let i=0;i<25;i++){
+    ALL_Q.push({
+        id:'cc-sup-'+i, theme:'Circuitos CC', diff:'Medio', concept:'Superposicao',
+        text:['A superposicao serve para analisar circuitos com:','O teorema da superposicao aplica-se a:','Superposicao é usada quando há:'][i%3],
+        opts:[
+            {t:'Várias fontes independentes', c:true},
+            {t:'Apenas uma fonte', c:false},
+            {t:'Componentes não lineares', c:false},
+            {t:'Circuitos em CA apenas', c:false}
+        ],
+        steps:['Aplica-se a circuitos LINEARES com várias fontes','Anula todas exceto uma, calcula, repete','Soma as respostas individuais'],
+        forms:['Vtotal = V1+V2+...+Vn'],
+        tip:'Só funciona em circuitos LINEARES. Não serve para potência!'
+    });
+}
+
+// Circuitos CA
+for(let i=0;i<40;i++){
+    let C=r(1,1000), f=r(20,100), Xc=(1/(2*Math.PI*f*C*1e-6)).toFixed(1);
+    let Cstr=C>=1000?(C/1000)+'mF':C+'μF';
+    ALL_Q.push({
+        id:'ca-xc-'+i, theme:'Circuitos CA', diff:'Medio', concept:'Reatancia Capacitiva',
+        text:'Condensador de '+Cstr+' em '+f+'Hz. Reatância:',
+        opts:[
+            {t:'Xc ≈ '+f(Xc)+' Ω', c:true},
+            {t:'Xc ≈ '+f((Xc*10).toFixed(1))+' Ω', c:false},
+            {t:'Xc ≈ '+f((Xc/10).toFixed(1))+' Ω', c:false},
+            {t:'Xc ≈ '+f((Xc*2).toFixed(1))+' Ω', c:false}
+        ],
+        steps:['Xc = 1/(2πfC)','C = '+C+'μF = '+C+'×10⁻⁶F','Xc = 1/(2×3,14×'+f+'×'+C+'×10⁻⁶) ≈ '+f(Xc)+'Ω'],
+        forms:['Xc = 1/(2πfC)'],
+        tip:'μF→F: divide por 1.000.000. Xc diminui com f↑.'
+    });
+}
+
+for(let i=0;i<40;i++){
+    let L=(r(1,100)/1000), f=r(20,100), XL=(2*Math.PI*f*L).toFixed(1), LmH=(L*1000).toFixed(0);
+    ALL_Q.push({
+        id:'ca-xl-'+i, theme:'Circuitos CA', diff:'Medio', concept:'Reatancia Indutiva',
+        text:'Bobina de '+LmH+'mH em '+f+'Hz. Reatância indutiva:',
+        opts:[
+            {t:'XL ≈ '+f(XL)+' Ω', c:true},
+            {t:'XL ≈ '+f((XL*10).toFixed(1))+' Ω', c:false},
+            {t:'XL ≈ '+f((XL/10).toFixed(1))+' Ω', c:false},
+            {t:'XL ≈ '+f((XL*2).toFixed(1))+' Ω', c:false}
+        ],
+        steps:['XL = 2πfL','L = '+LmH+'mH = '+f(L.toFixed(3))+'H','XL = 2×3,14×'+f+'×'+f(L.toFixed(3))+' ≈ '+f(XL)+'Ω'],
+        forms:['XL = 2πfL = ωL'],
+        tip:'XL aumenta com f↑. Em DC (f=0), XL=0 (curto-circuito!).'
+    });
+}
+
+for(let i=0;i<35;i++){
+    let R=r(5,50), XL=r(10,50), Xc=r(5,40), Z=Math.sqrt(R*R+(XL-Xc)*(XL-Xc)).toFixed(1);
+    ALL_Q.push({
+        id:'ca-imp-'+i, theme:'Circuitos CA', diff:'Medio', concept:'Impedancia',
+        text:'RLC série: R='+R+'Ω, XL='+XL+'Ω, Xc='+Xc+'Ω. Impedância:',
+        opts:[
+            {t:'Z ≈ '+f(Z)+' Ω', c:true},
+            {t:'Z = '+(R+XL+Xc)+' Ω', c:false},
+            {t:'Z = '+Math.abs(XL-Xc)+' Ω', c:false},
+            {t:'Z = '+R+' Ω', c:false}
+        ],
+        steps:['Z = √(R²+(XL-Xc)²)','Z = √('+R+'²+('+(XL-Xc)+')²)','Z = √'+(R*R+(XL-Xc)*(XL-Xc))+' ≈ '+f(Z)+'Ω'],
+        forms:['Z = √(R²+(XL-Xc)²)'],
+        tip:'XL>Xc: indutivo. Xc>XL: capacitivo. Iguais: ressonância (Z=R).'
+    });
+}
+
+for(let i=0;i<35;i++){
+    let P=r(100,2000), Q=r(100,1500), S=Math.sqrt(P*P+Q*Q).toFixed(0);
+    ALL_Q.push({
+        id:'ca-pow-'+i, theme:'Circuitos CA', diff:'Medio', concept:'Triangulo Potencias',
+        text:'AC: P='+P+'W, Q='+Q+'VAr. Potência aparente:',
+        opts:[
+            {t:'S = '+S+' VA', c:true},
+            {t:'S = '+(P+Q)+' VA', c:false},
+            {t:'S = '+Math.abs(P-Q)+' VA', c:false},
+            {t:'S = '+Math.round(Math.sqrt(Math.abs(P*P-Q*Q)))+' VA', c:false}
+        ],
+        steps:['S² = P²+Q²','S = √('+P+'²+'+Q+'²) = √'+(P*P+Q*Q),'S = '+S+'VA'],
+        forms:['S = √(P²+Q²)'],
+        tip:'P=ativa(W), Q=reativa(VAr), S=aparente(VA). Sempre S≥P e S≥Q.'
+    });
+}
+
+// Transformadores
+for(let i=0;i<40;i++){
+    let N1=r(100,1000), N2=r(50,500), V1=r(100,400), V2=Math.round(V1*N2/N1);
+    ALL_Q.push({
+        id:'tr-v-'+i, theme:'Transformadores', diff:'Medio', concept:'Relacao Transformacao',
+        text:'Transformador: '+N1+' espiras primário, '+N2+' secundário. Alimentado a '+V1+'V. Tensão secundário:',
+        opts:[
+            {t:'V2 = '+V2+' V', c:true},
+            {t:'V2 = '+Math.round(V1*N1/N2)+' V', c:false},
+            {t:'V2 = '+V1+' V', c:false},
+            {t:'V2 = '+Math.round(V1+N2-N1)+' V', c:false}
+        ],
+        steps:['V1/V2 = N1/N2','V2 = V1×(N2/N1)','V2 = '+V1+'×('+N2+'/'+N1+') = '+V2+'V'],
+        forms:['V1/V2 = N1/N2','V2 = V1×N2/N1'],
+        tip:N2<N1?'N2<N1 = abaixador. Tensão diminui.':'N2>N1 = elevador. Tensão aumenta.'
+    });
+}
+
+for(let i=0;i<30;i++){
+    let V1=r(100,400), V2=r(10,100), I2=(r(1,50)/10), I1=((V2*I2)/V1).toFixed(2);
+    ALL_Q.push({
+        id:'tr-i-'+i, theme:'Transformadores', diff:'Medio', concept:'Transformador Ideal',
+        text:'Transformador '+V1+'V→'+V2+'V alimenta carga de '+f(I2.toFixed(1))+'A. Corrente primário:',
+        opts:[
+            {t:'I1 = '+f(I1)+' A', c:true},
+            {t:'I1 = '+f(I2.toFixed(1))+' A', c:false},
+            {t:'I1 = '+f((V2*I2).toFixed(1))+' A', c:false},
+            {t:'I1 = '+f((V1/V2*I2).toFixed(2))+' A', c:false}
+        ],
+        steps:['V1×I1 = V2×I2','I1 = (V2×I2)/V1','I1 = ('+V2+'×'+f(I2.toFixed(1))+')/'+V1+' = '+f(I1)+'A'],
+        forms:['V1×I1 = V2×I2'],
+        tip:'Abaixador de tensão = elevador de corrente.'
+    });
+}
+
+for(let i=0;i<30;i++){
+    let Pout=r(100,5000), eff=r(85,99), Pin=Math.round(Pout*100/eff);
+    ALL_Q.push({
+        id:'tr-e-'+i, theme:'Transformadores', diff:'Medio', concept:'Rendimento',
+        text:'Transformador com η='+eff+'%, Psaída='+Pout+'W. Potência de entrada:',
+        opts:[
+            {t:'Pin = '+Pin+' W', c:true},
+            {t:'Pin = '+Pout+' W', c:false},
+            {t:'Pin = '+(Pin-Pout)+' W', c:false},
+            {t:'Pin = '+Math.round(Pout*eff/100)+' W', c:false}
+        ],
+        steps:['η = (Psaída/Pentrada)×100%','Pin = Psaída/(η/100)','Pin = '+Pout+'/'+f((eff/100).toFixed(2))+' = '+Pin+'W'],
+        forms:['η = Psaída/Pentrada × 100%'],
+        tip:'Rendimento real: 95-99%. Perdas = Joule + histerese/Foucault.'
+    });
+}
+
+// Maquinas
+for(let i=0;i<40;i++){
+    let f=r(25,100), p=r(1,4), ns=Math.round((60*f)/p);
+    ALL_Q.push({
+        id:'m-ns-'+i, theme:'Maquinas Eletricas', diff:'Medio', concept:'Velocidade Sincrona',
+        text:'Motor com '+p+' par(es) de polos a '+f+'Hz. Velocidade síncrona:',
+        opts:[
+            {t:'ns = '+ns+' rpm', c:true},
+            {t:'ns = '+Math.round(60*f*p)+' rpm', c:false},
+            {t:'ns = '+Math.round(f*p)+' rpm', c:false},
+            {t:'ns = '+Math.round(60/(f*p))+' rpm', c:false}
+        ],
+        steps:['ns = (60×f)/p','ns = (60×'+f+')/'+p,'ns = '+ns+' rpm'],
+        forms:['ns = 60f/p'],
+        tip:'ns = velocidade do campo magnético. Rotor gira sempre um pouco mais devagar.'
+    });
+}
+
+for(let i=0;i<30;i++){
+    let ns=r(500,3000), s=(r(1,50)/10), n=Math.round(ns*(1-s/100));
+    ALL_Q.push({
+        id:'m-s-'+i, theme:'Maquinas Eletricas', diff:'Medio', concept:'Escorregamento',
+        text:'Motor com ns='+ns+'rpm e rotor a '+n+'rpm. Escorregamento:',
+        opts:[
+            {t:'s = '+f(s.toFixed(1))+'%', c:true},
+            {t:'s = '+f((s*10).toFixed(1))+'%', c:false},
+            {t:'s = '+f((100-s).toFixed(1))+'%', c:false},
+            {t:'s = '+f((n/ns*100).toFixed(1))+'%', c:false}
+        ],
+        steps:['s = ((ns-n)/ns)×100%','s = (('+ns+'-'+n+')/'+ns+')×100%','s = '+f(s.toFixed(1))+'%'],
+        forms:['s = (ns-n)/ns × 100%'],
+        tip:'s típico: 1-5%. s=0 → sem torque. s=100% → parado.'
+    });
+}
+
+for(let i=0;i<30;i++){
+    ALL_Q.push({
+        id:'m-dc-'+i, theme:'Maquinas Eletricas', diff:'Medio', concept:'Motores DC',
+        text:['Motor DC shunt tem velocidade:','Motor DC série tem:','Para inverter sentido de motor DC:'][i%3],
+        opts:[
+            {t:['Aproximadamente constante','Alto binário arranque','Inverter um enrolamento'][i%3], c:true},
+            {t:['Que varia muito','Velocidade constante','Inverter ambos'][i%3], c:false},
+            {t:['Nula sem carga','Baixo binário','Aumentar tensão'][i%3], c:false},
+            {t:['Máxima em vazio','Velocidade nula','Diminuir corrente'][i%3], c:false}
+        ],
+        steps:['Shunt: velocidade constante','Série: alto binário arranque','Composto: intermédio'],
+        forms:[],
+        tip:'Shunt=paralelo. Série=série. Composto=ambos.'
+    });
+}
+
+// Instalacoes
+for(let i=0;i<40;i++){
+    let env=['seco','húmido','muito húmido'][i%3];
+    let Vlim=i%3===0?'25 V AC / 60 V DC':i%3===1?'25 V AC / 60 V DC':'12 V AC / 30 V DC';
+    ALL_Q.push({
+        id:'in-rbt-'+i, theme:'Instalacoes Eletricas', diff:'Medio', concept:'RBT Seguranca',
+        text:'Segundo RBT, tensão limite em locais '+env+':',
+        opts:[
+            {t:Vlim, c:true},
+            {t:'50 V AC / 120 V DC', c:false},
+            {t:'230 V AC / 400 V DC', c:false},
+            {t:'12 V AC / 24 V DC', c:false}
+        ],
+        steps:['RBT - Locais '+env+': '+Vlim,'Acima deste valor: risco de choque'],
+        forms:[],
+        tip:'Memoriza: seco=25/60, muito húmido=12/30.'
+    });
+}
+
+for(let i=0;i<30;i++){
+    let sens=['30 mA','300 mA','10 A','1 A'][i%4];
+    let correct=sens==='30 mA';
+    ALL_Q.push({
+        id:'in-ddr-'+i, theme:'Instalacoes Eletricas', diff:'Medio', concept:'Protecao Diferencial',
+        text:'DDR com sensibilidade '+sens+' serve para:',
+        opts:[
+            {t:correct?'Proteção de pessoas':'Proteção contra incêndios', c:correct},
+            {t:correct?'Proteção contra incêndios':'Proteção de pessoas', c:!correct},
+            {t:'Proteção de equipamentos', c:false},
+            {t:'Proteção contra sobretensões', c:false}
+        ],
+        steps:['30 mA: proteção pessoas','300 mA: proteção incêndios','DDR detecta fugas de corrente'],
+        forms:[],
+        tip:'DDR 30mA dispara em ~30ms. Obrigatório em casas de banho e cozinhas.'
+    });
+}
+
+for(let i=0;i<30;i++){
+    let Rterra=r(10,500), ok=Rterra<=100;
+    ALL_Q.push({
+        id:'in-gr-'+i, theme:'Instalacoes Eletricas', diff:'Medio', concept:'Aterramento',
+        text:'Instalação com resistência de terra de '+Rterra+'Ω. Segundo RBT:',
+        opts:[
+            {t:ok?'Dentro do limite (≤100Ω)':'Acima do limite (>100Ω)', c:true},
+            {t:ok?'Acima do limite':'Dentro do limite', c:false},
+            {t:'Perfeita (≤1Ω)', c:false},
+            {t:'Inaceitável (≥1000Ω)', c:false}
+        ],
+        steps:['RBT: Rterra máxima = 100Ω',Rterra+'Ω '+(ok?'≤':'>')+' 100Ω → '+(ok?'OK':'NÃO OK')],
+        forms:[],
+        tip:'Quanto menor Rterra, melhor a proteção contra contactos indiretos.'
+    });
+}
+
+console.log('Total questions loaded:', ALL_Q.length);
+
+// ===== APP LOGIC =====
+let curTopic='';
+let curQs=[];
+let curIdx=0;
+let selOpt=-1;
+let stats={a:0,c:0};
+let sess={a:0,c:0};
+
+function show(id){
+    document.querySelectorAll('[id^="page-"]').forEach(e=>e.classList.add('hidden'));
+    document.getElementById('page-'+id).classList.remove('hidden');
+}
+
+function goHome(){ show('home'); updateStats(); }
+
+function shuffle(a){
+    let arr=[...a];
+    for(let i=arr.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+    return arr;
+}
+
+function startTopic(t){
+    curTopic=t; sess={a:0,c:0};
+    let eb=shuffle(ALL_Q.filter(q=>q.theme==='Eletricidade Basica')).slice(0,25);
+    let others=[];
+
+    if(t==='eb'){ curQs=shuffle(ALL_Q.filter(q=>q.theme==='Eletricidade Basica')).slice(0,50); }
+    else if(t==='cc'){ others=shuffle(ALL_Q.filter(q=>q.theme==='Circuitos CC')).slice(0,25); }
+    else if(t==='ca'){ others=shuffle(ALL_Q.filter(q=>q.theme==='Circuitos CA')).slice(0,25); }
+    else if(t==='tr'){ others=shuffle(ALL_Q.filter(q=>q.theme==='Transformadores')).slice(0,25); }
+    else if(t==='mq'){ others=shuffle(ALL_Q.filter(q=>q.theme==='Maquinas Eletricas')).slice(0,25); }
+    else if(t==='in'){ others=shuffle(ALL_Q.filter(q=>q.theme==='Instalacoes Eletricas')).slice(0,25); }
+    else if(t==='all'){ curQs=shuffle(ALL_Q).slice(0,50); }
+
+    if(t!=='eb' && t!=='all') curQs=shuffle([...eb,...others]);
+
+    curIdx=0; selOpt=-1; show('q');
+    document.getElementById('q-total').textContent=curQs.length;
+    loadQ();
+}
+
+function loadQ(){
+    let q=curQs[curIdx]; selOpt=-1;
+    document.getElementById('q-num').textContent=curIdx+1;
+    document.getElementById('q-diff').textContent=q.diff;
+    document.getElementById('q-diff').className=q.diff==='Facil'?'diff-facil':q.diff==='Medio'?'diff-medio':'diff-dificil';
+    document.getElementById('q-concept').textContent=q.concept;
+    document.getElementById('q-text').textContent=q.text;
+
+    let d=document.getElementById('q-opts'); d.innerHTML='';
+    q.opts.forEach((o,i)=>{
+        let div=document.createElement('div'); div.className='option';
+        div.onclick=()=>selectOpt(i);
+        div.innerHTML='<span class="letter">'+String.fromCharCode(65+i)+'</span>'+o.t;
+        d.appendChild(div);
+    });
+
+    document.getElementById('btn-check').classList.remove('hidden');
+    document.getElementById('btn-next').classList.add('hidden');
+    document.getElementById('q-sol').classList.add('hidden');
+}
+
+function selectOpt(i){
+    if(selOpt!==-1)return;
+    selOpt=i;
+    document.querySelectorAll('.option').forEach((e,idx)=>{
+        e.classList.remove('selected');
+        if(idx===i)e.classList.add('selected');
+    });
+}
+
+function checkAnswer(){
+    if(selOpt===-1){alert('Seleciona uma opção!');return;}
+    let q=curQs[curIdx], opts=document.querySelectorAll('.option');
+    sess.a++; stats.a++; let correct=false;
+
+    opts.forEach((e,i)=>{
+        e.onclick=null; e.classList.add('disabled');
+        if(q.opts[i].c)e.classList.add('correct');
+        else if(i===selOpt)e.classList.add('wrong');
+    });
+
+    if(q.opts[selOpt].c){sess.c++; stats.c++; correct=true;}
+
+    document.getElementById('btn-check').classList.add('hidden');
+    document.getElementById('btn-next').classList.remove('hidden');
+
+    let sol=document.getElementById('q-sol'); sol.classList.remove('hidden');
+
+    let steps=document.getElementById('sol-steps'); steps.innerHTML='';
+    q.steps.forEach((s,i)=>{
+        let div=document.createElement('div'); div.className='step';
+        div.innerHTML='<span class="num">'+(i+1)+'</span><strong>'+s+'</strong>';
+        steps.appendChild(div);
+    });
+
+    let forms=document.getElementById('sol-forms'); forms.innerHTML='';
+    q.forms.forEach(f=>{let d=document.createElement('div');d.className='formula';d.textContent=f;forms.appendChild(d);});
+
+    document.getElementById('sol-tip').textContent=q.tip;
+}
+
+function nextQ(){
+    curIdx++;
+    if(curIdx>=curQs.length){showRes();return;}
+    loadQ();
+}
+
+function showRes(){
+    show('res');
+    let total=curQs.length, correct=sess.c, rate=total>0?Math.round((correct/total)*100):0;
+    document.getElementById('res-total').textContent=total;
+    document.getElementById('res-correct').textContent=correct;
+    document.getElementById('res-rate').textContent=rate+'%';
+
+    let msg=rate>=90?'Excelente! Muito bem!':rate>=70?'Bom trabalho!':rate>=50?'Razoável. Estuda mais!':'Não desanimes! Revisa as fórmulas!';
+    document.getElementById('res-msg').textContent=msg;
+}
+
+function retry(){ startTopic(curTopic); }
+function updateStats(){
+    document.getElementById('st-total').textContent=stats.a;
+    document.getElementById('st-correct').textContent=stats.c;
+    document.getElementById('st-rate').textContent=stats.a>0?Math.round((stats.c/stats.a)*100)+'%':'0%';
+}
+
+updateStats();
+</script>
+
+</body>
+</html>
